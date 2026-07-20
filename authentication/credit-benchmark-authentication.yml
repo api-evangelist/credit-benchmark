@@ -1,0 +1,14 @@
+generated: '2026-07-18'
+method: derived
+source: openapi/credit-benchmark-consensus-data-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: BearerAuth
+  type: http
+  scheme: bearer
+  bearerFormat: JWT
+  description: JWT bearer token.
+  sources:
+  - openapi/credit-benchmark-consensus-data-openapi.yml
