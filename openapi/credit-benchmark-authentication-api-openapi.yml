@@ -1,0 +1,158 @@
+openapi: 3.1.0
+info:
+  title: Credit Benchmark analytics authentication API
+  description: 'Authentication, entity resolution, data, analytics, and metadata endpoints.
+
+    '
+  version: 1.0.0
+  contact:
+    name: Credit Benchmark API Support
+    email: api-support@creditbenchmark.com
+    url: https://creditbenchmark.com/support
+  license:
+    name: Proprietary
+    url: https://creditbenchmark.com/terms
+servers:
+- url: https://gateway.creditbenchmark.com
+  description: Production gateway
+security:
+- BearerAuth: []
+tags:
+- name: authentication
+  description: Token generation endpoints.
+  x-group: Authentication
+paths:
+  /api/security/token:
+    post:
+      tags:
+      - authentication
+      summary: Create JWT Token
+      description: Create a JWT bearer token.
+      operationId: getToken
+      security: []
+      x-mint:
+        href: /api-reference/create-jwt-token
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+              - Username
+              - Password
+              additionalProperties: false
+              properties:
+                Username:
+                  type: string
+                  description: Your Credit Benchmark username.
+                  example: your_username
+                Password:
+                  type: string
+                  format: password
+                  description: Your Credit Benchmark password.
+                  example: your_password
+            example:
+              Username: your_username
+              Password: your_password
+      responses:
+        '200':
+          description: Access token generated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenResponse'
+              example:
+                accessToken: eyJraWQiOiJ4WldoaUZMd05OZ1VZVEtoVjVtam8tOFlvbTZ5Y0pyRXpGWlpqN3ltQ1E4IiwiYWxnIjoiUlMyNTYifQ...
+                expiresIn: 7200
+                tokenType: Bearer
+        '400':
+          $ref: '#/components/responses/AuthBadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+components:
+  responses:
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UnauthorizedError'
+          example:
+            detail: Unauthorized request
+    AuthBadRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AuthError'
+          example:
+            error:
+              code: BAD_REQUEST
+              message: The request payload is invalid.
+    InternalServerError:
+      description: Server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SimpleError'
+          example:
+            error: An error occurred while processing your request. Please try again later.
+  schemas:
+    TokenResponse:
+      type: object
+      title: TokenResponse
+      required:
+      - accessToken
+      - expiresIn
+      - tokenType
+      properties:
+        accessToken:
+          type: string
+          description: Bearer access token.
+        expiresIn:
+          type: integer
+          description: Token lifetime in seconds.
+          example: 7200
+        tokenType:
+          type: string
+          description: Token type.
+          example: Bearer
+    AuthError:
+      type: object
+      title: Error
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - code
+          - message
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+    SimpleError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: string
+    UnauthorizedError:
+      type: object
+      required:
+      - detail
+      properties:
+        detail:
+          type: string
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT bearer token.
