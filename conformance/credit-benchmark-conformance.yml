@@ -1,0 +1,35 @@
+generated: '2026-07-18'
+method: derived
+source: openapi/credit-benchmark-consensus-data-openapi.yml
+standards:
+- id: openapi-3.1
+  conforms: true
+  evidence: openapi field is 3.1.0
+- id: http-bearer-jwt
+  conforms: true
+  evidence: securitySchemes BearerAuth is http/bearer with bearerFormat JWT
+- id: oauth2
+  conforms: false
+  evidence: no oauth2 securityScheme; auth is a first-party JWT issued from username/password
+- id: openid-connect
+  conforms: false
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: errors use a proprietary {error, detail} JSON envelope, not application/problem+json
+- id: rfc8594-sunset-deprecation
+  conforms: false
+  evidence: no deprecation/sunset policy or headers documented
+- id: cursor-pagination
+  conforms: false
+  evidence: row routes use result_filter.limit + sort, no cursor/page-token pagination
+- id: idempotency-key
+  conforms: false
+  evidence: no idempotency-key header or parameter documented
+- id: fhir
+  conforms: false
+- id: fapi
+  conforms: false
+- id: scim
+  conforms: false
+- id: json-api
+  conforms: false

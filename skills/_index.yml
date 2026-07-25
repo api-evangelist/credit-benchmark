@@ -1,0 +1,16 @@
+generated: '2026-07-18'
+method: generated
+source: openapi/credit-benchmark-consensus-data-openapi.yml
+skills:
+- file: credit-benchmark-authenticate-and-get-data.md
+  name: Authenticate and extract Credit Benchmark data
+  api: openapi/credit-benchmark-consensus-data-openapi.yml
+  operations: [getToken, matchExternalEntities, metadata_columns_v2_metadata_columns_get, getData]
+- file: credit-benchmark-entity-resolution.md
+  name: Resolve company names to Credit Benchmark CB_IDs
+  api: openapi/credit-benchmark-consensus-data-openapi.yml
+  operations: [getToken, matchExternalEntities]
+- file: credit-benchmark-portfolio-analytics.md
+  name: Run Credit Benchmark portfolio analytics
+  api: openapi/credit-benchmark-consensus-data-openapi.yml
+  operations: [getToken, metadata_available_dates_v2_metadata_available_dates_get, aggregateTrend, creditBreakdown, entityRatingChange, ratingDistribution]

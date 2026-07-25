@@ -1,0 +1,62 @@
+generated: '2026-07-18'
+method: derived
+source: openapi/credit-benchmark-consensus-data-openapi.yml
+docs: https://docs.creditbenchmark.com/api-reference/intro
+format: custom
+envelope:
+  description: Errors return a JSON object with an "error" field and, on most errors, a human-readable "detail" field. Validation errors (422) follow the FastAPI validation error shape.
+  fields:
+  - error
+  - detail
+notes: Error responses are not RFC 9457 application/problem+json; they use a proprietary {error, detail} envelope. Descriptions below are derived from the OpenAPI response codes and the documented error schemas (SimpleError, UnauthorizedError, RateLimitError, FastApiValidationErrorResponse).
+problems:
+- status: 400
+  title: Bad Request
+  schema: SimpleError
+  remediation: The request was malformed or missing required parameters. Check the request body against the endpoint schema.
+  source_operations:
+  - openapi/credit-benchmark-consensus-data-openapi.yml#getToken
+  - openapi/credit-benchmark-consensus-data-openapi.yml#getData
+  - openapi/credit-benchmark-consensus-data-openapi.yml#aggregateTrend
+  - openapi/credit-benchmark-consensus-data-openapi.yml#entityRatingChange
+  - openapi/credit-benchmark-consensus-data-openapi.yml#creditBreakdown
+  - openapi/credit-benchmark-consensus-data-openapi.yml#ratingDistribution
+- status: 401
+  title: Unauthorized
+  schema: UnauthorizedError
+  remediation: The JWT bearer token is missing, invalid, or expired. Obtain a new token via POST /api/security/token and retry.
+  source_operations:
+  - openapi/credit-benchmark-consensus-data-openapi.yml#getToken
+  - openapi/credit-benchmark-consensus-data-openapi.yml#matchExternalEntities
+  - openapi/credit-benchmark-consensus-data-openapi.yml#getData
+- status: 403
+  title: Forbidden
+  schema: SimpleError
+  remediation: The authenticated account lacks entitlement for the requested data, columns, or universe. Contact support@creditbenchmark.com to review your entitlements.
+  source_operations:
+  - openapi/credit-benchmark-consensus-data-openapi.yml#matchExternalEntities
+  - openapi/credit-benchmark-consensus-data-openapi.yml#getData
+  - openapi/credit-benchmark-consensus-data-openapi.yml#creditBreakdown
+- status: 422
+  title: Unprocessable Entity (Validation Error)
+  schema: FastApiValidationErrorResponse
+  remediation: One or more request fields failed validation. Inspect the detail[] entries (loc, msg, type) to locate the offending field.
+  source_operations:
+  - openapi/credit-benchmark-consensus-data-openapi.yml#matchExternalEntities
+  - openapi/credit-benchmark-consensus-data-openapi.yml#getData
+  - openapi/credit-benchmark-consensus-data-openapi.yml#aggregateTrend
+- status: 429
+  title: Too Many Requests (Rate Limited)
+  schema: RateLimitError
+  remediation: The rate limit was exceeded. Back off and retry after a delay. Reuse the bearer token rather than re-authenticating on every call.
+  source_operations:
+  - openapi/credit-benchmark-consensus-data-openapi.yml#getData
+  - openapi/credit-benchmark-consensus-data-openapi.yml#aggregateTrend
+  - openapi/credit-benchmark-consensus-data-openapi.yml#ratingDistribution
+- status: 500
+  title: Internal Server Error
+  schema: SimpleError
+  remediation: An unexpected server error occurred. Retry with backoff; if it persists contact api-support@creditbenchmark.com.
+  source_operations:
+  - openapi/credit-benchmark-consensus-data-openapi.yml#getToken
+  - openapi/credit-benchmark-consensus-data-openapi.yml#getData

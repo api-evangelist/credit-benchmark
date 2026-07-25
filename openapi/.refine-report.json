@@ -1,0 +1,22 @@
+{
+  "provider": "credit-benchmark",
+  "sources": [
+    "credit-benchmark-analytics-api-openapi.yml",
+    "credit-benchmark-authentication-api-openapi.yml",
+    "credit-benchmark-data-api-openapi.yml",
+    "credit-benchmark-entity-resolution-api-openapi.yml",
+    "credit-benchmark-metadata-api-openapi.yml"
+  ],
+  "outputs": [
+    "credit-benchmark-analytics-api-openapi.yml",
+    "credit-benchmark-authentication-api-openapi.yml",
+    "credit-benchmark-data-api-openapi.yml",
+    "credit-benchmark-entity-resolution-api-openapi.yml",
+    "credit-benchmark-metadata-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

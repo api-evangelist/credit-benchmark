@@ -1,0 +1,14 @@
+{
+  "repo": "credit-benchmark",
+  "feeds": [
+    {
+      "source": "https://cbcbeta.creditbenchmark.com/",
+      "feed_url": "https://cbcbeta.creditbenchmark.com/",
+      "title": "",
+      "saved": 0,
+      "method": "none"
+    }
+  ],
+  "post_count": 0,
+  "fetched": "2026-07-20T13:31:34Z"
+}

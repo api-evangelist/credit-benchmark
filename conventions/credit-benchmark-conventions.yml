@@ -1,0 +1,44 @@
+generated: '2026-07-18'
+method: derived
+source: openapi/credit-benchmark-consensus-data-openapi.yml
+docs: https://docs.creditbenchmark.com/api-reference/intro
+summary: Cross-cutting request/response semantics for the Credit Benchmark REST API, derived from the OpenAPI and the docs hub. Base URL for all routes is https://gateway.creditbenchmark.com.
+authentication:
+  style: JWT bearer token
+  scheme: BearerAuth (http bearer, bearerFormat JWT)
+  token_endpoint: POST /api/security/token
+  token_grant: Username + Password (application/x-www-form-urlencoded)
+  guidance: Reuse the returned bearer token until it expires rather than re-authenticating per call.
+  ref: authentication/credit-benchmark-authentication.yml
+idempotency:
+  supported: false
+  notes: No idempotency-key header or parameter is documented. Analytics and data reads are POST-based but read-only; there are no create/charge-style mutating operations.
+pagination:
+  style: result-limit
+  notes: Row-returning routes accept a result_filter object with a limit, filter conditions (filters/filters_join), and sort. There is no cursor or page-token pagination; responses are columnar arrays keyed by column name.
+  params:
+  - result_filter.limit
+  - result_filter.sort
+  - result_filter.filters
+scoping:
+  notes: Requests are scoped with a scope object (portfolio, filters, filters_join). Available input columns, dates, rating scales, and industry/geography hierarchies are discovered via the /analytics/v2/metadata/ routes before building a query.
+versioning:
+  scheme: uri-path
+  current: v2
+  notes: Analytics and metadata routes are namespaced under /analytics/v2/. Authentication and matching routes are unversioned.
+error_envelope:
+  format: custom
+  fields:
+  - error
+  - detail
+  validation_shape: FastAPI validation error (detail[] with loc/msg/type) on 422
+  ref: errors/credit-benchmark-problem-types.yml
+rate_limiting:
+  signal: HTTP 429 (RateLimitError body {error, detail})
+  headers_documented: false
+  notes: A 429 is returned when limits are exceeded; no rate-limit headers (limit/remaining/reset) are documented. Reuse tokens and back off on 429.
+entitlements:
+  notes: Data access is entitlement-gated. Columns and universes outside the account entitlement return 403; metadata columns carry an entitlement flag.
+content_types:
+  request: application/json (token endpoint uses application/x-www-form-urlencoded)
+  response: application/json

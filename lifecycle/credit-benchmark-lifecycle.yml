@@ -1,0 +1,21 @@
+generated: '2026-07-18'
+method: searched
+source: https://docs.creditbenchmark.com/api-reference/intro
+versioning:
+  scheme: uri-path
+  current: v2
+  notes: Analytics and metadata routes are namespaced under /analytics/v2/. Authentication (/api/security/token) and matching (/matching/text/match_external) routes are unversioned.
+deprecation:
+  policy_url: null
+  sunset_header: false
+  notes: No public deprecation or sunset policy (RFC 8594) was found.
+sla:
+  url: null
+  notes: Enterprise/subscription API; no public SLA document found.
+status_page: https://status.creditbenchmark.com
+status_page_platform: Better Stack
+status_page_components:
+- Corporate Website
+- CBC Beta Web App
+- Enterprise API
+deprecated_operations: []

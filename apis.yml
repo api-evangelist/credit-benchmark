@@ -1,9 +1,31 @@
 aid: credit-benchmark
 name: Credit Benchmark
-description: 'Credit Benchmark is a company surfaced as a portfolio company of index-ventures and added
-  to the API Evangelist network as a stub for enrichment. Sector: fintech. This profile is a lead awaiting
-  the enrichment pipeline.'
+description: >-
+  Credit Benchmark is a financial data company that aggregates confidential credit-risk
+  estimates from over 40 leading global financial institutions into anonymized consensus
+  Credit Consensus Ratings (CCRs) and analytics covering 120,000+ public and private
+  entities, most of which are unrated by traditional agencies. Risk professionals across
+  banking, insurance, and asset management use the data for customer onboarding and credit
+  decisioning, portfolio monitoring, model calibration, market valuation, and regulatory
+  and third-party risk validation. Delivery channels include a REST API (gateway.creditbenchmark.com),
+  a web application, an Excel Add-In, SFTP/secure file transfer, and data marketplaces
+  (Snowflake, Databricks, AWS Data Exchange). The Consensus Data API exposes JWT-authenticated
+  entity resolution, raw data extraction, computed analytics (trends, breakdowns, rating
+  changes, distributions), and metadata discovery. Backed by Index Ventures.
 url: https://raw.githubusercontent.com/api-evangelist/credit-benchmark/refs/heads/main/apis.yml
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://www.creditbenchmark.com/wp-content/uploads/2025/06/CB-Logo-for-News-Page-scaled.png
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
@@ -12,16 +34,131 @@ x-tier: stub
 x-tier-reason: portfolio-lead
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-18'
 tags:
 - Company
 - Fintech
-apis: []
+- Credit Risk
+- Credit Ratings
+- Financial Data
+- Analytics
+- Data
+- API
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+apis:
+- aid: credit-benchmark:credit-benchmark-analytics-api
+  name: Credit Benchmark analytics API
+  description: Analytics endpoints.
+  humanURL: https://docs.creditbenchmark.com/api-reference/intro
+  baseURL: https://gateway.creditbenchmark.com
+  tags:
+  - analytics
+  properties:
+  - type: OpenAPI
+    url: openapi/credit-benchmark-analytics-api-openapi.yml
+- aid: credit-benchmark:credit-benchmark-authentication-api
+  name: Credit Benchmark authentication API
+  description: Token generation endpoints.
+  humanURL: https://docs.creditbenchmark.com/api-reference/intro
+  baseURL: https://gateway.creditbenchmark.com
+  tags:
+  - authentication
+  properties:
+  - type: OpenAPI
+    url: openapi/credit-benchmark-authentication-api-openapi.yml
+- aid: credit-benchmark:credit-benchmark-data-api
+  name: Credit Benchmark data API
+  description: Raw data extraction endpoints.
+  humanURL: https://docs.creditbenchmark.com/api-reference/intro
+  baseURL: https://gateway.creditbenchmark.com
+  tags:
+  - data
+  properties:
+  - type: OpenAPI
+    url: openapi/credit-benchmark-data-api-openapi.yml
+- aid: credit-benchmark:credit-benchmark-entity-resolution-api
+  name: Credit Benchmark entity-resolution API
+  description: Entity name resolution endpoints.
+  humanURL: https://docs.creditbenchmark.com/api-reference/intro
+  baseURL: https://gateway.creditbenchmark.com
+  tags:
+  - entity-resolution
+  properties:
+  - type: OpenAPI
+    url: openapi/credit-benchmark-entity-resolution-api-openapi.yml
+- aid: credit-benchmark:credit-benchmark-metadata-api
+  name: Credit Benchmark metadata API
+  description: Metadata discovery endpoints.
+  humanURL: https://docs.creditbenchmark.com/api-reference/intro
+  baseURL: https://gateway.creditbenchmark.com
+  tags:
+  - metadata
+  properties:
+  - type: OpenAPI
+    url: openapi/credit-benchmark-metadata-api-openapi.yml
 common:
+- type: Documentation
+  url: https://docs.creditbenchmark.com/
+- type: DeveloperPortal
+  url: https://docs.creditbenchmark.com/
+- type: APIReference
+  url: https://docs.creditbenchmark.com/api-reference/intro
+- type: GettingStarted
+  url: https://docs.creditbenchmark.com/delivery-channels/getting-access
+- type: Login
+  url: https://cbcbeta.creditbenchmark.com/
+- type: Blog
+  url: https://www.creditbenchmark.com/research/
+- type: Support
+  url: https://www.creditbenchmark.com/contact/
+- type: TermsOfService
+  url: https://www.creditbenchmark.com/terms-of-use/
+- type: PrivacyPolicy
+  url: https://www.creditbenchmark.com/privacy-policy/
+- type: StatusPage
+  url: https://status.creditbenchmark.com
+- type: TrustCenter
+  url: https://compliance.creditbenchmark.com/
+- type: OpenAPI
+  url: openapi/credit-benchmark-consensus-data-openapi.yml
+- type: LLMsTxt
+  url: llms/credit-benchmark-llms.txt
+- type: Authentication
+  url: authentication/credit-benchmark-authentication.yml
+- type: Conventions
+  url: conventions/credit-benchmark-conventions.yml
+- type: ErrorCatalog
+  url: errors/credit-benchmark-problem-types.yml
+- type: DataModel
+  url: data-model/credit-benchmark-data-model.yml
+- type: Conformance
+  url: conformance/credit-benchmark-conformance.yml
+- type: Lifecycle
+  url: lifecycle/credit-benchmark-lifecycle.yml
+- type: Overlay
+  url: overlays/credit-benchmark-consensus-data-overlay.yaml
+- type: MCPServer
+  url: mcp/credit-benchmark-mcp.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: AgenticAccess
+  url: agentic-access/credit-benchmark-agentic-access.yml
+- type: TrustCenter
+  url: security/credit-benchmark-trust-center.yml
+- type: VulnerabilityDisclosure
+  url: security/credit-benchmark-vulnerability-disclosure.yml
+- type: Security
+  url: https://www.creditbenchmark.com/vulnerability-disclosure/
+- type: DomainSecurity
+  url: security/credit-benchmark-domain-security.yml
 - type: Website
-  url: http://creditbenchmark.com
+  url: https://www.creditbenchmark.com
+x-enrichment:
+  date: '2026-07-19'
+  status: backfilled
+  pass: local-v1
+  note: backfilled from .gitignore signal + verified work evidence

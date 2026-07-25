@@ -1,0 +1,69 @@
+generated: '2026-07-18'
+method: derived
+source: openapi/credit-benchmark-consensus-data-openapi.yml
+docs: https://docs.creditbenchmark.com/data/data-dictionary
+summary: Entity-relationship graph derived from the Credit Benchmark OpenAPI request/response schemas. The central identifier is the CB_ID (CBID), Credit Benchmark's entity identifier that entity resolution maps free-text names to and that all analytics/data routes key on.
+identifiers:
+- name: CB_ID
+  aka: CBID
+  description: Credit Benchmark entity identifier; primary key across matching, data, and analytics routes.
+entities:
+- name: Token
+  schema: TokenResponse
+  description: JWT bearer token issued by POST /api/security/token; carried on all subsequent requests.
+- name: Entity
+  key: CB_ID
+  description: A resolved company/entity with consensus credit data (CB_Legal_Name, CB_CCR, CB_CCR_21_Notch, CB_CCR_100_PDMid).
+  schemas:
+  - GetDataResponse
+  - ExternalMatchEntity
+- name: MatchCandidate
+  schema: ExternalCandidate
+  description: A ranked candidate returned by entity resolution, with a confidence score, for an input entity name.
+- name: Scope
+  schema: Scope
+  description: Query scope selecting a universe of entities (portfolio + filters).
+- name: ResultFilter
+  schema: ResultFilter
+  description: Result-side limiting, filtering, and sorting applied to a query.
+- name: DataColumn
+  schema: DataColumnMetadata
+  description: An available input/output column with type, scopeable/facetable flags, and entitlement.
+- name: RatingScale
+  schema: RatingScalesMetadataResponse
+  description: CB rating scale metadata (CB21 and CB7 orderings and band mappings).
+- name: IndustrySchema
+  schema: IndustrySchemaMetadataResponse
+  description: CB industry hierarchy (L1-L6).
+- name: GeographySchema
+  schema: GeographySchemaMetadataResponse
+  description: CB geography hierarchy (region group, region, country of risk).
+relationships:
+- from: MatchExternalResponse
+  to: ExternalMatchRow
+  type: has_many
+  via: rows
+- from: ExternalMatchRow
+  to: ExternalCandidate
+  type: has_many
+  via: candidates
+- from: ExternalCandidate
+  to: Entity
+  type: belongs_to
+  via: CB_ID
+- from: GetDataRequest
+  to: Scope
+  type: has_one
+  via: scope
+- from: GetDataRequest
+  to: ResultFilter
+  type: has_one
+  via: result_filter
+- from: Scope
+  to: ScopeFilter
+  type: has_many
+  via: filters
+- from: GetDataResponse
+  to: Entity
+  type: has_many
+  via: CB_ID
